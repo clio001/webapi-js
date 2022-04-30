@@ -1,0 +1,21 @@
+body {
+  background: url("https://images.unsplash.com/photo-1600170885301-7a7fc8ffb5a3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+#testbox {
+  background-color: white;
+  padding: 20px;
+}
+
+.navbar {
+  box-shadow: 0px 5px 15px grey;
+}
+
+#intro {
+  background-color: white;
+  padding: 5%;
+  box-shadow: 0px 5px 15px gray;
+}
