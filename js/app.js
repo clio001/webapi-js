@@ -1,6 +1,6 @@
 async function getData() {
   let response = await fetch(
-    'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=("antarctica")&fq=news_desk:("Foreign")&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y'
+    'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=("arctic")&fq=news_desk:("Business")&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y'
   );
   let myData = await response.json();
   printResult(myData);
@@ -20,6 +20,4 @@ function printResult(myData) {
   let urlImg =
     "https://static01.nyt.com/" + myData.response.docs[0].multimedia[0].url;
   document.querySelector("#api-img").setAttribute("src", urlImg);
-
-  document.querySelector("#btn").remove();
 }
