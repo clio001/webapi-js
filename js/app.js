@@ -1,6 +1,6 @@
 async function getData() {
   let response = await fetch(
-    'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=("antarctica")&fq=news_desk:("Foreign")&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y'
+    'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Arctic&fq=news_desk;("Business")&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y'
   );
   let myData = await response.json();
   printResult(myData);
