@@ -47,8 +47,7 @@
 
     <div class="container-fluid h-100">
       <div class="row align-items-center h-100">
-        <div class="col-sm"></div>
-        <div class="col-sm align-self-center" id="testbox">
+        <div class="col-sm-8 align-self-start" id="testbox">
           <div class="card" style="width: 18rem">
             <img src="https://images.unsplash.com/photo-1600170885301-7a7fc8ffb5a3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" class="card-img-top" id="api-img" alt="..." />
             <div class="card-body">
@@ -57,11 +56,70 @@
                   <p id="api-byline">[Date, Byline]</p>
                 <p id="api-abstract">[Abstract]</p>
               </p>
-              <a href="#" class="btn btn-outline-dark" id="btn" onclick="getData()">Get article </a>
+              
             </div>
           </div>
         </div>
-        <div class="col-sm"></div>
+        <div class="col-sm-4" id="controlPanel">
+          <h2 class="display-4">Control panel</h2>
+          <div class="lead mb-3">Filter your search for news about the polar world.</div>
+          <div class="control-search-container mb-3">
+            <label class="display-6 mb-2">Search</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="control-dropdown-container">
+            <label class="display-6 mb-2">Region:</label><br>
+              <div class="form-check form-check-inline mb-3">
+            <input class="form-check-input" type="radio" value="arctic" id="inputRadioArctic">
+            <label class="form-check-label" for="input-radio-arctic">Arctic</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="antarctica" id="inputRadioAntarctica">
+            <label class="form-check-label" for="input-radio-arctic">Antarctica</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="bipolar" id="inputRadioBipolar">
+            <label class="form-check-label" for="input-radio-arctic">Bipolar</label>
+          </div>       
+            <select class="form-select mb-3" name="region" id="inputRegion">
+              <option value="Alaska">Alaska</option>
+              <option value="United States">United States</option>
+              <option value="Canada">Canada</option>
+              <option value="Greenland">Greenland</option>
+              <option value="Iceland">Iceland</option>
+              <option value="Svalbard">Svalbard</option>
+              <option value="Sweden">Sweden</option>
+              <option value="Norway">Norway</option>
+              <option value="Finnland">Finnland</option>
+              <option value="Russia">Russia</option>
+            </select>
+          </div>
+          <div class="control-checkbox-container mb-3">
+            <label class="form-check-label display-6 mb-2">Section:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="national" checked>
+              <label class="form-check-label" for="national">National</label>
+            </div>
+                        <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="foreign">
+              <label class="form-check-label" for="foreign">Foreign</label>
+            </div>
+                        <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="business">
+              <label class="form-check-label" for="business">Business</label>
+            </div>
+                        <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="technology">
+              <label class="form-check-label" for="technology">Technology</label>
+            </div>
+            
+          </div>
+          <div class="">
+            <label class="form-check-label display-6 mb-2">Year:</label><br>
+            <input class="mb-3" type="range" style="width: 100%;">
+          </div>
+          <a href="#" class="btn btn-outline-dark mb-3" id="btn" onclick="getData()">Get article </a>
+        </div>
       </div>
     </div>
     <script src="../js/app.js"></script>

@@ -20,6 +20,4 @@ function printResult(myData) {
   let urlImg =
     "https://static01.nyt.com/" + myData.response.docs[0].multimedia[0].url;
   document.querySelector("#api-img").setAttribute("src", urlImg);
-
-  document.querySelector("#btn").remove();
 }
