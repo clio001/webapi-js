@@ -12,16 +12,10 @@ body {
   padding: 20px;
 }
 
-table {
-  background-color: deepskyblue;
-}
-
-tr {
-  border: 1px solid darkblue;
-}
-
 td {
   border: 1px solid black;
+  padding: 25px;
+  vertical-align: top;
 }
 
 #intro {

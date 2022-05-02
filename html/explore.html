@@ -35,7 +35,7 @@
               <a class="nav-link" href="#">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Explore</a>
+              <a class="nav-link active" href="./explore.html">Explore</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Data</a>
@@ -48,7 +48,7 @@
     <div class="container-fluid h-100">
       <div class="row align-items-center h-100">
         <div class="col-sm-8 align-self-start" id="result-container"></div>
-        <div class="col-sm-4" id="controlPanel">
+        <div class="col-sm-4 align-self-start" id="controlPanel">
           <h2 class="display-4">Control panel</h2>
           <div class="lead mb-3">
             Filter your search for news about the polar world.
@@ -60,8 +60,11 @@
                 type="text"
                 class="form-control"
                 placeholder="e.g. Inuit knowledge"
+                id="input-search-explore"
               />
-              <button class="btn btn-outline-secondary">Search</button>
+              <button class="btn btn-outline-secondary" onclick="getData()">
+                Search
+              </button>
             </div>
           </div>
           <div class="control-dropdown-container">
@@ -176,13 +179,7 @@
             <label class="form-check-label display-6 mb-2">Year:</label><br />
             <input class="mb-3" type="range" style="width: 100%" />
           </div>
-          <a
-            href="#"
-            class="btn btn-outline-dark mb-3"
-            id="btn"
-            onclick="getData()"
-            >Apply
-          </a>
+          <a href="#" class="btn btn-outline-dark mb-3" id="btn">Apply </a>
         </div>
       </div>
     </div>
