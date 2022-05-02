@@ -5,7 +5,10 @@ body {
   height: 100vh;
 }
 
-#testbox {
+#result-container {
+  display: flex;
+  flex-direction: row wrap;
+  justify-content: space-evenly;
   padding: 20px;
 }
 
