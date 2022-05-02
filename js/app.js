@@ -1,17 +1,54 @@
+// TODO: BUILD API URL
+
 // * FETCH API DATA
 
 async function getData() {
   let response = await fetch(
-    'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Antarctica&fq=news_desk:("Foreign")&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y'
+    'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Arctic&fq=news_desk:("Foreign")&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y'
   );
   let myData = await response.json();
   printResult(myData);
   console.log(myData);
 }
 
-// * CREATE CARD
+// * CREATE TABLE
 
-function createCard() {
+function createTable(rows, cols) {
+  let resultContainerTag = document.querySelector("#result-container");
+
+  let tableTag = document.createElement("table");
+  resultContainerTag.appendChild(tableTag);
+
+  let tbodyTag = document.createElement("tbody");
+  tableTag.appendChild(tbodyTag);
+
+  for (let i = 0; i < rows; i++) {
+    let trTag = document.createElement("tr");
+    tbodyTag.appendChild(trTag);
+  }
+
+  const allTrTags = document.querySelectorAll("tr");
+  console.log(allTrTags.length);
+
+  let idCounter = 0;
+
+  for (let i = 0; i < allTrTags.length; i++) {
+    for (let x = 0; x < cols; x++) {
+      let tdTag = document.createElement("td");
+      tdTag.setAttribute("id", `td-${idCounter}`);
+      allTrTags[i].appendChild(tdTag);
+      idCounter++;
+    }
+  }
+}
+
+createTable(5, 3);
+
+// * PRODUCE RESULT OF API QUERY
+
+function printResult(myData) {
+  // ? Creating and appending card HTML:
+
   let resultContainerTag = document.querySelector("#result-container");
 
   let divCard = document.createElement("div");
@@ -55,13 +92,8 @@ function createCard() {
   let abstractTag = document.createElement("p");
   abstractTag.setAttribute("id", "api-abstract");
   textTag.appendChild(abstractTag);
-}
 
-// * PRODUCE RESULT OF API QUERY
-
-function printResult(myData) {
-  test.test();
-  createCard();
+  // ? Filling out card:
 
   document.querySelector("#api-title").textContent =
     myData.response.docs[0].headline.main;
@@ -89,9 +121,9 @@ function printResult(myData) {
   document.querySelector("#api-img").setAttribute("src", urlImg);
 }
 
-/* DISABLE REGION DROPDOWN WHEN ANTARCTICA SELECTED
+// TODO: DISABLE REGION DROPDOWN WHEN ANTARCTICA SELECTED
 
-let antarcticaRadio = document.querySelector("#inputRadioAntarctica");
+/* let antarcticaRadio = document.querySelector("#inputRadioAntarctica");
 antarcticaRadio.addEventListener("click", () => {
   if (antarcticaRadio.checked) {
     document.querySelector("#inputRegion").disabled = true;
