@@ -33,6 +33,14 @@ td {
   cursor: pointer;
 }
 
+.abstract-margin-top {
+  margin-top: 10px;
+}
+
+.font-grey {
+  color: grey;
+}
+
 #api-date,
 #api-section {
   color: grey;

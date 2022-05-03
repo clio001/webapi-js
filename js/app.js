@@ -1,8 +1,6 @@
-// TODO: BUILD API URL
-
 // * FETCH API DATA
 
-async function getData() {
+const getData = async () => {
   const base_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
 
   const userQuery = `q=${
@@ -23,7 +21,7 @@ async function getData() {
   let response = await fetch(fullURL);
   let myData = await response.json();
   printResult(myData);
-}
+};
 
 // * PRODUCE RESULT OF API QUERY
 
@@ -68,14 +66,17 @@ const printResult = (myData) => {
 
     let dateTag = document.createElement("span");
     dateTag.setAttribute("id", `api-date-${i}`);
+    dateTag.setAttribute("class", "font-grey");
     textTag.appendChild(dateTag);
 
     let sectionTag = document.createElement("span");
     sectionTag.setAttribute("id", `api-section-${i}`);
+    sectionTag.setAttribute("class", "font-grey");
     textTag.appendChild(sectionTag);
 
     let abstractTag = document.createElement("p");
     abstractTag.setAttribute("id", `api-abstract-${i}`);
+    abstractTag.setAttribute("class", "abstract-margin-top");
     textTag.appendChild(abstractTag);
 
     // ? Filling out the card:
@@ -89,8 +90,9 @@ const printResult = (myData) => {
     document.querySelector(`#api-abstract-${i}`).textContent =
       myData.response.docs[i].abstract;
 
-    let pubdate = new Date(myData.response.docs[i].pub_date);
-    articlePubdate = pubdate.toLocaleDateString("en-US", {
+    articlePubdate = new Date(
+      myData.response.docs[i].pub_date
+    ).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -98,8 +100,9 @@ const printResult = (myData) => {
 
     document.querySelector(`#api-date-${i}`).textContent = articlePubdate;
 
-    document.querySelector(`#api-section-${i}`).textContent =
-      myData.response.docs[i].news_desk;
+    document.querySelector(
+      `#api-section-${i}`
+    ).textContent = `, ${myData.response.docs[i].news_desk}`;
 
     // ? Error handling for empty multimedia json arrays
     if (myData.response.docs[i].multimedia.length === 0) {
