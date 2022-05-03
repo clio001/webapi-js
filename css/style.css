@@ -5,10 +5,12 @@ body {
   height: 100vh;
 }
 
+body#body-explore {
+  background: radial-gradient(ellipse, white, #c1e1ec);
+  height: 100%;
+}
+
 #result-container {
-  display: flex;
-  flex-direction: row wrap;
-  justify-content: space-evenly;
   padding: 20px;
 }
 

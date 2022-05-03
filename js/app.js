@@ -19,7 +19,6 @@ async function getData() {
   let response = await fetch(fullURL);
   let myData = await response.json();
   printResult(myData);
-  console.log(myData);
 }
 
 // * PRODUCE RESULT OF API QUERY
@@ -35,7 +34,7 @@ const printResult = (myData) => {
 
     let divCard = document.createElement("div");
     divCard.setAttribute("class", "card");
-    divCard.setAttribute("style", "width: 15rem");
+    divCard.setAttribute("style", "width: 17rem");
     resultContainerTag.appendChild(divCard);
 
     let imgTag = document.createElement("img");
@@ -99,7 +98,7 @@ const printResult = (myData) => {
       myData.response.docs[i].news_desk;
 
     // TODO: error handling for undefined json values
-    if (myData.response.docs[i].multimedia[i].url == undefined) {
+    if (myData.response.docs[i].multimedia.length === 0) {
       let urlImg =
         "https://images.unsplash.com/photo-1600170885301-7a7fc8ffb5a3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80";
       document.querySelector(`#api-img-${i}`).setAttribute("src", urlImg);
@@ -122,7 +121,7 @@ const createBSTable = (myData) => {
 
   for (let i = 0; i < myData.response.docs.length; i++) {
     let colTag = document.createElement("div");
-    colTag.setAttribute("class", "col");
+    colTag.setAttribute("class", "col mb-3");
     colTag.setAttribute("id", `col-${i}`);
     rowTag.appendChild(colTag);
   }
