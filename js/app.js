@@ -14,7 +14,7 @@ async function getData() {
   const apiKey = "&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y";
 
   let fullURL = base_URL + userQuery + queryNewsDesk + apiKey;
-  console.log(fullURL);
+  console.log("API request", fullURL);
 
   let response = await fetch(fullURL);
   let myData = await response.json();
@@ -74,6 +74,10 @@ const printResult = (myData) => {
     abstractTag.setAttribute("id", `api-abstract-${i}`);
     textTag.appendChild(abstractTag);
 
+    let linkTag = document.createElement("p");
+    linkTag.setAttribute("id", `api-link-${i}`);
+    textTag.appendChild(linkTag);
+
     // ? Filling out the card:
 
     document.querySelector(`#api-title-${i}`).textContent =
@@ -97,15 +101,21 @@ const printResult = (myData) => {
     document.querySelector(`#api-section-${i}`).textContent =
       myData.response.docs[i].news_desk;
 
-    // TODO: error handling for undefined json values
+    // ? Error handling for empty multimedia json arrays
     if (myData.response.docs[i].multimedia.length === 0) {
-      let urlImg =
-        "https://images.unsplash.com/photo-1600170885301-7a7fc8ffb5a3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80";
-      document.querySelector(`#api-img-${i}`).setAttribute("src", urlImg);
+      document
+        .querySelector(`#api-img-${i}`)
+        .setAttribute(
+          "src",
+          "https://images.unsplash.com/photo-1600170885301-7a7fc8ffb5a3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        );
     } else {
-      let urlImg =
-        "https://static01.nyt.com/" + myData.response.docs[i].multimedia[i].url;
-      document.querySelector(`#api-img-${i}`).setAttribute("src", urlImg);
+      document
+        .querySelector(`#api-img-${i}`)
+        .setAttribute(
+          "src",
+          `https://static01.nyt.com/${myData.response.docs[i].multimedia[0].url}`
+        );
     }
   }
 };
@@ -132,6 +142,8 @@ const createBSTable = (myData) => {
 const clearDOM = () => {
   document.querySelector("#result-container").innerHTML = "";
 };
+
+getData();
 
 // TODO: DISABLE REGION DROPDOWN WHEN ANTARCTICA SELECTED
 
