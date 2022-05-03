@@ -28,6 +28,11 @@ td {
   box-shadow: 0px 5px 15px grey;
 }
 
+.card:hover {
+  box-shadow: 0px 1px 30px grey;
+  cursor: pointer;
+}
+
 #api-date,
 #api-section {
   color: grey;

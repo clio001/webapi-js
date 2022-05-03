@@ -9,11 +9,15 @@ async function getData() {
     document.querySelector("#input-search-explore").value
   }`;
 
+  const polarFocus = '&fq=glocations:("Arctic")';
+
+  const queryPubYear = `&fq=pub_year:("${2022}")`;
+
   const queryNewsDesk = "";
 
   const apiKey = "&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y";
 
-  let fullURL = base_URL + userQuery + queryNewsDesk + apiKey;
+  let fullURL = base_URL + userQuery + queryPubYear + apiKey;
   console.log("API request", fullURL);
 
   let response = await fetch(fullURL);
@@ -73,10 +77,6 @@ const printResult = (myData) => {
     let abstractTag = document.createElement("p");
     abstractTag.setAttribute("id", `api-abstract-${i}`);
     textTag.appendChild(abstractTag);
-
-    let linkTag = document.createElement("p");
-    linkTag.setAttribute("id", `api-link-${i}`);
-    textTag.appendChild(linkTag);
 
     // ? Filling out the card:
 
@@ -143,7 +143,20 @@ const clearDOM = () => {
   document.querySelector("#result-container").innerHTML = "";
 };
 
+// * CONTROL PANEL SEARCH BUTTON FUNCTIONALITY
+
+document
+  .querySelector("#explore-search-btn")
+  .addEventListener("click", () => getData());
 getData();
+
+document
+  .querySelector("#input-search-explore")
+  .addEventListener("keyup", (event) => {
+    if (event.code == "Enter") {
+      getData();
+    } else return;
+  });
 
 // TODO: DISABLE REGION DROPDOWN WHEN ANTARCTICA SELECTED
 
