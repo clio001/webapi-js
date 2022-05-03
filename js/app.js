@@ -9,7 +9,7 @@ async function getData() {
     document.querySelector("#input-search-explore").value
   }`;
 
-  const queryNewsDesk = '&fq=news_desk:("Foreign")';
+  const queryNewsDesk = "";
 
   const apiKey = "&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y";
 
@@ -24,46 +24,14 @@ async function getData() {
 
 // * PRODUCE RESULT OF API QUERY
 
-function printResult(myData) {
-  // ? Clearing results page
-
-  // ? Creating the table:
-
-  function createTable(rows, cols) {
-    let resultContainerTag = document.querySelector("#result-container");
-
-    let tableTag = document.createElement("table");
-    resultContainerTag.appendChild(tableTag);
-
-    let tbodyTag = document.createElement("tbody");
-    tableTag.appendChild(tbodyTag);
-
-    for (let i = 0; i < rows; i++) {
-      let trTag = document.createElement("tr");
-      tbodyTag.appendChild(trTag);
-    }
-
-    const allTrTags = document.querySelectorAll("tr");
-    console.log(allTrTags.length);
-
-    let idCounter = 0;
-
-    for (let i = 0; i < allTrTags.length; i++) {
-      for (let x = 0; x < cols; x++) {
-        let tdTag = document.createElement("td");
-        tdTag.setAttribute("id", `td-${idCounter}`);
-        allTrTags[i].appendChild(tdTag);
-        idCounter++;
-      }
-    }
-  }
-
-  createTable(3, 4);
+const printResult = (myData) => {
+  clearDOM();
+  createBSTable(myData);
 
   // ? Creating and appending card HTML:
 
   for (let i = 0; i < myData.response.docs.length; i++) {
-    let resultContainerTag = document.querySelector(`#td-${i}`);
+    let resultContainerTag = document.querySelector(`#col-${i}`);
 
     let divCard = document.createElement("div");
     divCard.setAttribute("class", "card");
@@ -141,7 +109,30 @@ function printResult(myData) {
       document.querySelector(`#api-img-${i}`).setAttribute("src", urlImg);
     }
   }
-}
+};
+
+// * FUNCTION TO CREATE BOOTSTRAP TABLE
+
+const createBSTable = (myData) => {
+  let resultContainerTag = document.querySelector("#result-container");
+
+  let rowTag = document.createElement("div");
+  rowTag.setAttribute("class", "row");
+  resultContainerTag.appendChild(rowTag);
+
+  for (let i = 0; i < myData.response.docs.length; i++) {
+    let colTag = document.createElement("div");
+    colTag.setAttribute("class", "col");
+    colTag.setAttribute("id", `col-${i}`);
+    rowTag.appendChild(colTag);
+  }
+};
+
+// * FUNCTION TO CLEAR DOM
+
+const clearDOM = () => {
+  document.querySelector("#result-container").innerHTML = "";
+};
 
 // TODO: DISABLE REGION DROPDOWN WHEN ANTARCTICA SELECTED
 
