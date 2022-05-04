@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+
+    <title>Icy News - Home</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../index.html">ICY NEWS</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="explore.html">Explore</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="data.html">Data</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" id="text-container">
+          <h2 class="display-3">Data</h2>
+          <p class="lead">All the polar news that's fit to fetch.</p>
+          <p>
+            The data underlying this web application is provided by The New York
+            Times. A variety of web APIs are offered to access dedicated content
+            and meta data for web developer through the website's Developer
+            Network. For an overview of the APIs available:
+            <button id="expand-button">Expand</button>
+          </p>
+          <ul id="NYT-webapis">
+            <li>Archive API</li>
+            <li>Article Search API</li>
+            <li>Books API</li>
+            <li>Community API</li>
+            <li>Most Popular API</li>
+            <li>Movie Reviews API</li>
+            <li>RSS Feeds</li>
+            <li>Semantic API</li>
+            <li>Times Tags API</li>
+            <li>Times Wire API</li>
+            <li>Top Stories API</li>
+          </ul>
+          <p>
+            The Icy News web application uses the
+            <a
+              href="https://developer.nytimes.com/docs/articlesearch-product/1/overview"
+              target="_blank"
+              >Article Search API</a
+            >
+            and draws on a series of query and filter options provided by the
+            API. It combines the query, publication year, and the geolocation
+            filter options to create a user-generated, dynamic request.
+          </p>
+          <p>
+            The meta data provided as part of the Article Search API JSON offers
+            various options to further filter the results returned from the
+            user-generated API request. The Icy News web application enables
+            users to filter results by news desk, byline, month, and date.
+          </p>
+          <p>May 2022</p>
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+    </div>
+    <script>
+      document.querySelector("#expand-button").addEventListener("click", () => {
+        let pTag = document.querySelector("#NYT-webapis");
+        if (pTag.style.display == "none") {
+          pTag.style.display = "block";
+          let btn = document.querySelector("#expand-button");
+          btn.textContent = "Hide";
+        } else {
+          pTag.style.display = "none";
+          let btn = document.querySelector("#expand-button");
+          btn.textContent = "Expand";
+        }
+      });
+    </script>
+  </body>
+</html>

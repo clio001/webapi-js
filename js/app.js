@@ -42,10 +42,16 @@ const printResult = (myData) => {
   for (let i = 0; i < myData.response.docs.length; i++) {
     let resultContainerTag = document.querySelector(`#col-${i}`);
 
+    let aTag = document.createElement("a");
+    aTag.setAttribute("id", `api-link-${i}`);
+    aTag.setAttribute("class", "text-decoration-none text-reset");
+    aTag.setAttribute("target", "_blank");
+    resultContainerTag.appendChild(aTag);
+
     let divCard = document.createElement("div");
     divCard.setAttribute("class", "card");
     divCard.setAttribute("style", "width: 17rem");
-    resultContainerTag.appendChild(divCard);
+    aTag.appendChild(divCard);
 
     let imgTag = document.createElement("img");
     imgTag.setAttribute("class", "card-img-top");
@@ -88,6 +94,10 @@ const printResult = (myData) => {
     textTag.appendChild(abstractTag);
 
     // ? Filling out the card:
+
+    document
+      .querySelector(`#api-link-${i}`)
+      .setAttribute("href", myData.response.docs[i].web_url);
 
     document.querySelector(`#api-title-${i}`).textContent =
       myData.response.docs[i].headline.main;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="../css/style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -21,7 +21,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">ICY NEWS</a>
+        <a class="navbar-brand" href="../index.html">ICY NEWS</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -36,13 +36,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="./html/about.html">About</a>
+              <a class="nav-link" href="about.html">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./html/explore.html">Explore</a>
+              <a class="nav-link" href="explore.html">Explore</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./html/data.html">Data</a>
+              <a class="nav-link" href="data.html">Data</a>
             </li>
           </ul>
         </div>
@@ -50,23 +50,44 @@
     </nav>
 
     <div class="container-fluid h-100">
-      <div class="row align-items-center h-100">
-        <div class="col-sm"></div>
-        <div class="col-sm align-self-center" id="intro">
-          <h1 class="display-1">Icy News</h1>
+      <div class="row h-100">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" id="text-container">
+          <h2 class="display-3">About</h2>
           <p class="lead">
             Find out about the latest reporting on the polar world in the pages
             of the New York Times.
           </p>
-          <a href="./html/explore.html"
+          <p>
+            The polar regions have attracted the attention of public audiences
+            for centuries. Long after indigenous peoples had populated the
+            circumpolar north, commerce, religion, science, and geopolitics led
+            societies from North America, Europe and other parts towards the
+            Arctic.
+          </p>
+          <p>
+            Today, the Arctic and the Antarctic are most often associated with
+            the dramatic effects of the global climate emergency. As sea water
+            rise and glaciers continue to receede at an ever-faster pace, the
+            Arctic is warming four times as fast as the rest of the planet.
+          </p>
+          <p>
+            The Icy News web application offers a narrow but deep glimpse into
+            the world of New York Times journalism about the polar regions. The
+            website enables professional and non-professional researchers to
+            locate information about the peoples and the environments at the
+            ends of the world.
+          </p>
+          <p>Learn more about the polar regions today!</p>
+          <a href="explore.html"
             ><button class="btn btn-outline-secondary" id="intro-button">
               Explore
             </button></a
           >
         </div>
-        <div class="col-sm"></div>
+        <div class="col-sm-3"></div>
       </div>
     </div>
-    <!-- <script src="./js/app.js"></script> -->
+    <script src="./js/app.js"></script>
   </body>
 </html>
