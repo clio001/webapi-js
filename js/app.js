@@ -3,21 +3,26 @@
 const getData = async () => {
   const base_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
 
-  const userQuery = `q=${
+  const userQuery = ` AND ${
     document.querySelector("#input-search-explore").value
   }`;
 
-  const polarFocus = '&fq=glocations:("Arctic")';
+  let userPolarFocus = "";
+  if (document.querySelector("#inputRadioArctic").checked) {
+    userPolarFocus = document.querySelector("#inputRadioArctic").value;
+  } else {
+    userPolarFocus = document.querySelector("#inputRadioAntarctica").value;
+  }
 
-  const queryPubDate = `&fq=pub_date:("${
-    document.querySelector("#user-date").value
-  }")`;
+  const polarFocus = `q=${userPolarFocus}`;
 
-  const queryNewsDesk = "";
+  const userInputYear = document.querySelector("#input-year").value;
+  const userYear = `&fq=pub_year:("${userInputYear}")`;
 
   const apiKey = "&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y";
 
-  let fullURL = base_URL + userQuery + queryPubDate + apiKey;
+  let fullURL = `${base_URL}${polarFocus}${userQuery}${userYear}${apiKey}`;
+
   console.log("API request", fullURL);
 
   let response = await fetch(fullURL);
@@ -29,25 +34,7 @@ const getData = async () => {
 
 const printResult = (myData) => {
   clearDOM();
-
-  // ? No results error handling
-
-  if (myData.response.docs.length === 0) {
-    let resultContainerTag = document.querySelector("#result-container");
-
-    let errorTag = document.createElement("p");
-    errorTag.setAttribute("class", "alert alert-warning");
-    errorTag.textContent = "No results found. Please try again!";
-    resultContainerTag.appendChild(errorTag);
-  } else {
-    let resultContainerTag = document.querySelector("#result-container");
-
-    let errorTag = document.createElement("p");
-    errorTag.setAttribute("class", "alert alert-success");
-    errorTag.textContent = `${myData.response.docs.length} results found.`;
-    resultContainerTag.appendChild(errorTag);
-  }
-
+  ErrorNoResults(myData);
   createBSTable(myData);
 
   // ? Creating and appending card HTML:
@@ -126,6 +113,7 @@ const printResult = (myData) => {
     ).textContent = `, ${myData.response.docs[i].news_desk}`;
 
     // ? Error handling for empty multimedia json arrays
+
     if (myData.response.docs[i].multimedia.length === 0) {
       document
         .querySelector(`#api-img-${i}`)
@@ -142,7 +130,6 @@ const printResult = (myData) => {
         );
     }
   }
-  pullDate(myData);
 };
 
 // * CREATE BOOTSTRAP TABLE
@@ -172,6 +159,7 @@ const pullDate = (myData) => {
   console.log("array length", myData.response.docs.length);
 
   // ? Getting dates of data already displayed
+  let articlePubdate = "";
 
   for (let i = 0; i < myData.response.docs.length; i++) {
     let articlePubdate = new Date(myData.response.docs[i].pub_date)
@@ -190,7 +178,27 @@ const clearDOM = () => {
   document.querySelector("#result-container").innerHTML = "";
 };
 
-// * CONTROL PANEL SEARCH BUTTON FUNCTIONALITY
+// * ERROR HANDLING NO RESULTS
+
+const ErrorNoResults = (myData) => {
+  if (myData.response.docs.length === 0) {
+    let resultContainerTag = document.querySelector("#result-container");
+
+    let errorTag = document.createElement("p");
+    errorTag.setAttribute("class", "alert alert-warning");
+    errorTag.textContent = "No results found. Please try again!";
+    resultContainerTag.appendChild(errorTag);
+  } else {
+    let resultContainerTag = document.querySelector("#result-container");
+
+    let errorTag = document.createElement("div");
+    errorTag.setAttribute("class", "alert alert-success");
+    errorTag.textContent = `${myData.response.docs.length} results found.`;
+    resultContainerTag.appendChild(errorTag);
+  }
+};
+
+// * SET EVENT LISTENERS
 
 const setEventListeners = () => {
   document
@@ -199,6 +207,12 @@ const setEventListeners = () => {
       getData();
     });
 
+  document.querySelector("#input-year").addEventListener("keyup", (event) => {
+    if (event.code == "Enter") {
+      getData();
+    } else return;
+  });
+
   document
     .querySelector("#input-search-explore")
     .addEventListener("keyup", (event) => {
@@ -206,16 +220,21 @@ const setEventListeners = () => {
         getData();
       } else return;
     });
+
+  document
+    .querySelector("#inputRadioAntarctica")
+    .addEventListener("click", () => {
+      if (document.querySelector("#inputRadioAntarctica").checked) {
+        document.querySelector("#inputRegion").disabled = true;
+      }
+    });
+
+  document.querySelector("#inputRadioArctic").addEventListener("click", () => {
+    if (document.querySelector("#inputRadioArctic").checked) {
+      document.querySelector("#inputRegion").disabled = false;
+    }
+  });
 };
 
 getData();
 setEventListeners();
-
-// TODO: DISABLE REGION DROPDOWN WHEN ANTARCTICA SELECTED
-
-/* let antarcticaRadio = document.querySelector("#inputRadioAntarctica");
-antarcticaRadio.addEventListener("click", () => {
-  if (antarcticaRadio.checked) {
-    document.querySelector("#inputRegion").disabled = true;
-  }
-}); */
