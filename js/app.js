@@ -9,13 +9,15 @@ const getData = async () => {
 
   const polarFocus = '&fq=glocations:("Arctic")';
 
-  const queryPubYear = `&fq=pub_year:("${2022}")`;
+  const queryPubDate = `&fq=pub_date:("${
+    document.querySelector("#user-date").value
+  }")`;
 
   const queryNewsDesk = "";
 
   const apiKey = "&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y";
 
-  let fullURL = base_URL + userQuery + queryPubYear + apiKey;
+  let fullURL = base_URL + userQuery + queryPubDate + apiKey;
   console.log("API request", fullURL);
 
   let response = await fetch(fullURL);
@@ -27,6 +29,25 @@ const getData = async () => {
 
 const printResult = (myData) => {
   clearDOM();
+
+  // ? No results error handling
+
+  if (myData.response.docs.length === 0) {
+    let resultContainerTag = document.querySelector("#result-container");
+
+    let errorTag = document.createElement("p");
+    errorTag.setAttribute("class", "alert alert-warning");
+    errorTag.textContent = "No results found. Please try again!";
+    resultContainerTag.appendChild(errorTag);
+  } else {
+    let resultContainerTag = document.querySelector("#result-container");
+
+    let errorTag = document.createElement("p");
+    errorTag.setAttribute("class", "alert alert-success");
+    errorTag.textContent = `${myData.response.docs.length} results found.`;
+    resultContainerTag.appendChild(errorTag);
+  }
+
   createBSTable(myData);
 
   // ? Creating and appending card HTML:
@@ -121,9 +142,10 @@ const printResult = (myData) => {
         );
     }
   }
+  pullDate(myData);
 };
 
-// * FUNCTION TO CREATE BOOTSTRAP TABLE
+// * CREATE BOOTSTRAP TABLE
 
 const createBSTable = (myData) => {
   let resultContainerTag = document.querySelector("#result-container");
@@ -140,7 +162,29 @@ const createBSTable = (myData) => {
   }
 };
 
-// * FUNCTION TO CLEAR DOM
+// * GET DATE
+
+const pullDate = (myData) => {
+  // ? Getting user input
+
+  let userDate = document.querySelector("#user-date").value;
+  console.log("user date", userDate);
+  console.log("array length", myData.response.docs.length);
+
+  // ? Getting dates of data already displayed
+
+  for (let i = 0; i < myData.response.docs.length; i++) {
+    let articlePubdate = new Date(myData.response.docs[i].pub_date)
+      .toISOString()
+      .slice(0, 10);
+    console.log("Artikeldatum", articlePubdate);
+  }
+  return articlePubdate;
+
+  // ? Comparing user input with existing output
+};
+
+// * CLEAR DOM
 
 const clearDOM = () => {
   document.querySelector("#result-container").innerHTML = "";
@@ -148,18 +192,24 @@ const clearDOM = () => {
 
 // * CONTROL PANEL SEARCH BUTTON FUNCTIONALITY
 
-document
-  .querySelector("#explore-search-btn")
-  .addEventListener("click", () => getData());
-getData();
-
-document
-  .querySelector("#input-search-explore")
-  .addEventListener("keyup", (event) => {
-    if (event.code == "Enter") {
+const setEventListeners = () => {
+  document
+    .querySelector("#explore-search-btn")
+    .addEventListener("click", () => {
       getData();
-    } else return;
-  });
+    });
+
+  document
+    .querySelector("#input-search-explore")
+    .addEventListener("keyup", (event) => {
+      if (event.code == "Enter") {
+        getData();
+      } else return;
+    });
+};
+
+getData();
+setEventListeners();
 
 // TODO: DISABLE REGION DROPDOWN WHEN ANTARCTICA SELECTED
 
