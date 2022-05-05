@@ -1,4 +1,4 @@
-// * FETCH API DATA
+// #region // * FETCH API DATA
 
 const getData = async () => {
   const base_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
@@ -28,13 +28,16 @@ const getData = async () => {
   let response = await fetch(fullURL);
   let myData = await response.json();
   printResult(myData);
+  ErrorNoResults(myData);
+  populateDropdown(myData);
 };
 
-// * PRODUCE RESULT OF API QUERY
+// #endregion
+
+// #region // * PRODUCE RESULT OF API QUERY
 
 const printResult = (myData) => {
   clearDOM();
-  ErrorNoResults(myData);
   createBSTable(myData);
 
   // ? Creating and appending card HTML:
@@ -93,7 +96,7 @@ const printResult = (myData) => {
     abstractTag.setAttribute("class", "abstract-margin-top");
     textTag.appendChild(abstractTag);
 
-    // ? Filling out the card:
+    // ? Filling in the card:
 
     document
       .querySelector(`#api-link-${i}`)
@@ -120,7 +123,7 @@ const printResult = (myData) => {
 
     document.querySelector(
       `#api-section-${i}`
-    ).textContent = `, ${myData.response.docs[i].news_desk}`;
+    ).textContent = `, ${myData.response.docs[i].section_name}`;
 
     // ? Error handling for empty multimedia json arrays
 
@@ -142,7 +145,9 @@ const printResult = (myData) => {
   }
 };
 
-// * CREATE BOOTSTRAP TABLE
+// #endregion
+
+// #region CREATE BOOTSTRAP TABLE
 
 const createBSTable = (myData) => {
   let resultContainerTag = document.querySelector("#result-container");
@@ -159,18 +164,53 @@ const createBSTable = (myData) => {
   }
 };
 
-// * FILTER DYNAMIC FETCH RESULTS
+// #endregion
 
-async function filterResults() {
-  const requestResult = await getData();
-  console.log("Result of request", requestResult);
+// #region CONTROLLER FUNCTION // ! Result is undefined
 
-  /* let userSection = document.querySelector("#inputSection").value;
-  let responseSection = myData.response.docs[0];
-  console.log("responseSection", responseSection); */
+async function controller() {
+  const result = await getData();
+  console.log("Controller result", result);
 }
+// #endregion
 
-// * GET DATE
+// #region DROPDOWN POPULATION
+
+const populateDropdown = (myData) => {
+  // ? Populating dropdown options for NYT sections
+
+  let dropdownSection = document.querySelector("#inputSection");
+  let sections = [];
+  for (let i = 0; i < myData.response.docs.length; i++) {
+    sections.push(myData.response.docs[i].section_name);
+  }
+  const unique_sections = [...new Set(sections)];
+  console.log(unique_sections);
+
+  for (let i = 0; i < unique_sections.length; i++) {
+    let option = document.createElement("option");
+    option.textContent = unique_sections[i];
+    dropdownSection.appendChild(option);
+  }
+
+  // ? Populating dropdown options for NYT authors
+
+  let authors = [];
+  for (let i = 0; i < myData.response.docs.length; i++) {
+    authors.push(myData.response.docs[i].byline.original);
+  }
+  const unique_authors = [...new Set(authors)];
+
+  let dropdownByline = document.querySelector("#inputByline");
+  for (let i = 0; i < unique_authors.length; i++) {
+    let option = document.createElement("option");
+    option.textContent = unique_authors[i];
+    dropdownByline.appendChild(option);
+  }
+};
+// #endregion
+
+// #region GET DATE // ? Not used so far
 
 const pullDate = (myData) => {
   // ? Getting user input
@@ -189,17 +229,20 @@ const pullDate = (myData) => {
     console.log("Artikeldatum", articlePubdate);
   }
   return articlePubdate;
-
-  // ? Comparing user input with existing output
 };
+// #endregion
 
-// * CLEAR DOM
+// #region CLEAR DOM
 
 const clearDOM = () => {
   document.querySelector("#result-container").innerHTML = "";
+  document.querySelector("#inputSection").innerHTML = "";
+  document.querySelector("#inputByline").innerHTML = "";
 };
 
-// * ERROR HANDLING NO RESULTS
+// #endregion
+
+// #region ERROR HANDLING NO RESULTS
 
 const ErrorNoResults = (myData) => {
   if (myData.response.docs.length === 0) {
@@ -219,7 +262,9 @@ const ErrorNoResults = (myData) => {
   }
 };
 
-// * SET EVENT LISTENERS
+// #endregion
+
+// #region SET EVENT LISTENERS
 
 const setEventListeners = () => {
   document
@@ -256,7 +301,8 @@ const setEventListeners = () => {
     }
   });
 };
+// #endregion
 
 getData();
-filterResults();
 setEventListeners();
+/* controller(); */
