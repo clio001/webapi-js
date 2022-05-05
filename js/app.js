@@ -1,4 +1,4 @@
-// #region // * FETCH API DATA
+// #region FETCH API DATA
 
 const getData = async () => {
   const base_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
@@ -34,7 +34,7 @@ const getData = async () => {
 
 // #endregion
 
-// #region // * PRODUCE RESULT OF API QUERY
+// #region PRODUCE RESULT OF API QUERY
 
 const printResult = (myData) => {
   clearDOM();
