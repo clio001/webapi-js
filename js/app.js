@@ -27,9 +27,11 @@ const getData = async () => {
 
   let response = await fetch(fullURL);
   let myData = await response.json();
+
   printResult(myData);
-  ErrorNoResults(myData);
   populateDropdown(myData);
+  triggerSectionFilter(myData);
+  triggerAuthorsFilter(myData);
 };
 
 // #endregion
@@ -38,6 +40,7 @@ const getData = async () => {
 
 const printResult = (myData) => {
   clearDOM();
+  ErrorNoResults(myData);
   createBSTable(myData);
 
   // ? Creating and appending card HTML:
@@ -179,14 +182,13 @@ async function controller() {
 const populateDropdown = (myData) => {
   // ? Populating dropdown options for NYT sections
 
-  let dropdownSection = document.querySelector("#inputSection");
   let sections = [];
   for (let i = 0; i < myData.response.docs.length; i++) {
     sections.push(myData.response.docs[i].section_name);
   }
-  const unique_sections = [...new Set(sections)];
-  console.log(unique_sections);
+  unique_sections = [...new Set(sections)];
 
+  let dropdownSection = document.querySelector("#inputSection");
   for (let i = 0; i < unique_sections.length; i++) {
     let option = document.createElement("option");
     option.textContent = unique_sections[i];
@@ -199,7 +201,7 @@ const populateDropdown = (myData) => {
   for (let i = 0; i < myData.response.docs.length; i++) {
     authors.push(myData.response.docs[i].byline.original);
   }
-  const unique_authors = [...new Set(authors)];
+  unique_authors = [...new Set(authors)];
 
   let dropdownByline = document.querySelector("#inputByline");
   for (let i = 0; i < unique_authors.length; i++) {
@@ -208,6 +210,50 @@ const populateDropdown = (myData) => {
     dropdownByline.appendChild(option);
   }
 };
+// #endregion
+
+// #region FILTER NYT SECTION RESULTS // ! FILTERING WORKS ONCE, BUT WHEN NEW SEARCH REQUEST MADE WITHOUT REFRESHING THE WEBSITE IT SEEMS TO RUN THE FUNCTION TWICE AND TO RETURN OBJECT WITH AN EMPTY DOCS ARRAY.
+
+const filterSectionResults = (myData) => {
+  let userSection = document.querySelector("#inputSection").value;
+  let filteredArticles = { response: { docs: [] } };
+  for (let i = 0; i < myData.response.docs.length; i++) {
+    if (userSection === myData.response.docs[i].section_name) {
+      filteredArticles.response.docs.push(myData.response.docs[i]);
+    }
+  }
+  printResult(filteredArticles);
+  console.log("Filtered articles: ", filteredArticles);
+};
+
+const triggerSectionFilter = (myData) => {
+  document.querySelector("#apply-btn").addEventListener("click", () => {
+    filterSectionResults(myData);
+  });
+};
+
+// #endregion
+
+// #region FILTER NYT AUTHORS RESULTS // ! FILTERING WORKS ONCE, BUT WHEN NEW SEARCH REQUEST MADE WITHOUT REFRESHING THE WEBSITE IT SEEMS TO RUN THE FUNCTION TWICE AND TO RETURN OBJECT WITH AN EMPTY DOCS ARRAY.
+
+const filterAuthorsResults = (myData) => {
+  let userAuthors = document.querySelector("#inputByline").value;
+  let filteredAuthors = { response: { docs: [] } };
+  for (let i = 0; i < myData.response.docs.length; i++) {
+    if (userAuthors === myData.response.docs[i].byline.original) {
+      filteredAuthors.response.docs.push(myData.response.docs[i]);
+    }
+  }
+  printResult(filteredAuthors);
+  console.log("Filtered Authors: ", filteredAuthors);
+};
+
+const triggerAuthorsFilter = (myData) => {
+  document.querySelector("#inputByline").addEventListener("change", () => {
+    filterAuthorsResults(myData);
+  });
+};
+
 // #endregion
 
 // #region GET DATE // ? Not used so far
@@ -305,4 +351,5 @@ const setEventListeners = () => {
 
 getData();
 setEventListeners();
+
 /* controller(); */
