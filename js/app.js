@@ -159,6 +159,17 @@ const createBSTable = (myData) => {
   }
 };
 
+// * FILTER DYNAMIC FETCH RESULTS
+
+async function filterResults() {
+  const requestResult = await getData();
+  console.log("Result of request", requestResult);
+
+  /* let userSection = document.querySelector("#inputSection").value;
+  let responseSection = myData.response.docs[0];
+  console.log("responseSection", responseSection); */
+}
+
 // * GET DATE
 
 const pullDate = (myData) => {
@@ -247,4 +258,5 @@ const setEventListeners = () => {
 };
 
 getData();
+filterResults();
 setEventListeners();
