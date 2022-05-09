@@ -1,7 +1,8 @@
-// #region FETCH API DATA
+// #region // * FETCH API DATA
 
 const getData = async () => {
   const base_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
+  const apiKey = "&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y";
 
   const userQuery = ` AND ${
     document.querySelector("#input-search-explore").value
@@ -15,14 +16,10 @@ const getData = async () => {
   }
 
   const polarFocus = `q=${userPolarFocus}`;
-
   const userInputYear = document.querySelector("#input-year").value;
   const userYear = `&fq=pub_year:("${userInputYear}")`;
 
-  const apiKey = "&api-key=jbIYjBeDQwCAfrWak0psVqCGshuSaU2y";
-
   let fullURL = `${base_URL}${polarFocus}${userQuery}${userYear}${apiKey}`;
-
   console.log("API request", fullURL);
 
   let response = await fetch(fullURL);
@@ -36,7 +33,7 @@ const getData = async () => {
 
 // #endregion
 
-// #region PRODUCE RESULT OF API QUERY
+// #region // * PRODUCE RESULT OF API QUERY
 
 const printResult = (myData) => {
   clearDOM();
@@ -150,7 +147,7 @@ const printResult = (myData) => {
 
 // #endregion
 
-// #region CREATE BOOTSTRAP TABLE
+// #region // * CREATE BOOTSTRAP TABLE
 
 const createBSTable = (myData) => {
   let resultContainerTag = document.querySelector("#result-container");
@@ -169,7 +166,7 @@ const createBSTable = (myData) => {
 
 // #endregion
 
-// #region CONTROLLER FUNCTION // ! Result is undefined
+// #region // * CONTROLLER FUNCTION // ! Result is undefined
 
 async function controller() {
   const result = await getData();
@@ -177,7 +174,7 @@ async function controller() {
 }
 // #endregion
 
-// #region DROPDOWN POPULATION
+// #region // * DROPDOWN POPULATION
 
 const populateDropdown = (myData) => {
   // ? Populating dropdown options for NYT sections
@@ -212,7 +209,8 @@ const populateDropdown = (myData) => {
 };
 // #endregion
 
-// #region FILTER NYT SECTION RESULTS // ! FILTERING WORKS ONCE, BUT WHEN NEW SEARCH REQUEST MADE WITHOUT REFRESHING THE WEBSITE IT SEEMS TO RUN THE FUNCTION TWICE AND TO RETURN OBJECT WITH AN EMPTY DOCS ARRAY.
+// #region // * FILTER NYT SECTION RESULTS
+// ! FILTERING WORKS ONCE, BUT WHEN NEW SEARCH REQUEST MADE WITHOUT REFRESHING THE WEBSITE IT SEEMS TO RUN THE FUNCTION TWICE AND TO RETURN OBJECT WITH AN EMPTY DOCS ARRAY.
 
 const filterSectionResults = (myData) => {
   let userSection = document.querySelector("#inputSection").value;
@@ -234,7 +232,8 @@ const triggerSectionFilter = (myData) => {
 
 // #endregion
 
-// #region FILTER NYT AUTHORS RESULTS // ! FILTERING WORKS ONCE, BUT WHEN NEW SEARCH REQUEST MADE WITHOUT REFRESHING THE WEBSITE IT SEEMS TO RUN THE FUNCTION TWICE AND TO RETURN OBJECT WITH AN EMPTY DOCS ARRAY.
+// #region // * FILTER NYT AUTHORS RESULTS
+// ! FILTERING WORKS ONCE, BUT WHEN NEW SEARCH REQUEST MADE WITHOUT REFRESHING THE WEBSITE IT SEEMS TO RUN THE FUNCTION TWICE AND TO RETURN OBJECT WITH AN EMPTY DOCS ARRAY.
 
 const filterAuthorsResults = (myData) => {
   let userAuthors = document.querySelector("#inputByline").value;
@@ -256,7 +255,7 @@ const triggerAuthorsFilter = (myData) => {
 
 // #endregion
 
-// #region GET DATE // ? Not used so far
+// #region // * GET DATE // ? Not used so far
 
 const pullDate = (myData) => {
   // ? Getting user input
@@ -278,7 +277,7 @@ const pullDate = (myData) => {
 };
 // #endregion
 
-// #region CLEAR DOM
+// #region // * CLEAR DOM
 
 const clearDOM = () => {
   document.querySelector("#result-container").innerHTML = "";
@@ -288,7 +287,7 @@ const clearDOM = () => {
 
 // #endregion
 
-// #region ERROR HANDLING NO RESULTS
+// #region // * ERROR HANDLING NO RESULTS
 
 const ErrorNoResults = (myData) => {
   if (myData.response.docs.length === 0) {
@@ -310,7 +309,7 @@ const ErrorNoResults = (myData) => {
 
 // #endregion
 
-// #region SET EVENT LISTENERS
+// #region // * SET EVENT LISTENERS
 
 const setEventListeners = () => {
   document
