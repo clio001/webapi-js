@@ -9,6 +9,9 @@ const getData = async () => {
   }`;
 
   let userPolarFocus = "";
+  // ! here you can use this syntax (or very similar one, check your colleagues code because I remember at least one using
+  // ! it): document.querySelector("input[radio]:checked").value
+  // ! this way you directly select the value of the radio that is checked
   if (document.querySelector("#inputRadioArctic").checked) {
     userPolarFocus = document.querySelector("#inputRadioArctic").value;
   } else {
@@ -21,10 +24,10 @@ const getData = async () => {
 
   let fullURL = `${base_URL}${polarFocus}${userQuery}${userYear}${apiKey}`;
   console.log("API request", fullURL);
-
+  // ! try and catch block are missing
   let response = await fetch(fullURL);
   let myData = await response.json();
-
+  // ! you could "clean" my data already here (send to the functions myData.response.docs)
   printResult(myData);
   populateDropdown(myData);
   triggerSectionFilter(myData);
@@ -37,7 +40,15 @@ const getData = async () => {
 
 const printResult = (myData) => {
   clearDOM();
+
+  // ! it would be better to check here the length of your results and call ErrorNoResults() to create the error message
+  // ! and an other function to displat the number of results found (if you do both in the ErrorNoResults() it's very
+  // ! confusing, if you don't want to create 2 functions at least rename that one)
   ErrorNoResults(myData);
+
+  // ! creating the bootstrap grid, injecting it in the html and then selecting the singular cells means at least 3 DOM
+  // ! operations. creating the grid, selecting the container and then injecting it, it is only 2 DOM operations
+  // ! which is a lot faster. it seems over complicated to first inject the grid, then select it and then fill it.
   createBSTable(myData);
 
   // ? Creating and appending card HTML:
@@ -126,7 +137,7 @@ const printResult = (myData) => {
     ).textContent = `, ${myData.response.docs[i].section_name}`;
 
     // ? Error handling for empty multimedia json arrays
-
+    // ! nice!
     if (myData.response.docs[i].multimedia.length === 0) {
       document
         .querySelector(`#api-img-${i}`)
@@ -191,7 +202,8 @@ const populateDropdown = (myData) => {
     option.textContent = unique_sections[i];
     dropdownSection.appendChild(option);
   }
-
+  // ! to avoid 2 loops you could check if section_name is not present in sections array, and if it is not, push it
+  // ! and directly create the option
   // ? Populating dropdown options for NYT authors
 
   let authors = [];
@@ -211,7 +223,7 @@ const populateDropdown = (myData) => {
 
 // #region // * FILTER NYT SECTION RESULTS
 // ! FILTERING WORKS ONCE, BUT WHEN NEW SEARCH REQUEST MADE WITHOUT REFRESHING THE WEBSITE IT SEEMS TO RUN THE FUNCTION TWICE AND TO RETURN OBJECT WITH AN EMPTY DOCS ARRAY.
-
+// ! check cleanDOM() function to know why ;)
 const filterSectionResults = (myData) => {
   let userSection = document.querySelector("#inputSection").value;
   let filteredArticles = { response: { docs: [] } };
@@ -234,7 +246,7 @@ const triggerSectionFilter = (myData) => {
 
 // #region // * FILTER NYT AUTHORS RESULTS
 // ! FILTERING WORKS ONCE, BUT WHEN NEW SEARCH REQUEST MADE WITHOUT REFRESHING THE WEBSITE IT SEEMS TO RUN THE FUNCTION TWICE AND TO RETURN OBJECT WITH AN EMPTY DOCS ARRAY.
-
+// ! check cleanDOM() function to know why ;)
 const filterAuthorsResults = (myData) => {
   let userAuthors = document.querySelector("#inputByline").value;
   let filteredAuthors = { response: { docs: [] } };
@@ -281,8 +293,9 @@ const pullDate = (myData) => {
 
 const clearDOM = () => {
   document.querySelector("#result-container").innerHTML = "";
-  document.querySelector("#inputSection").innerHTML = "";
-  document.querySelector("#inputByline").innerHTML = "";
+  // ! cleaning also the select is the reason why your filtering system don't work properly
+  // document.querySelector("#inputSection").innerHTML = "";
+  // document.querySelector("#inputByline").innerHTML = "";
 };
 
 // #endregion
@@ -331,7 +344,11 @@ const setEventListeners = () => {
         getData();
       } else return;
     });
+  // ! nice, but you could do something like that below:
 
+  // ! document.querySelector("input[radio]:checked").value === "Arctic" ?
+  // ! document.querySelector("#inputRegion").disabled = false :
+  // ! document.querySelector("#inputRegion").disabled = true
   document
     .querySelector("#inputRadioAntarctica")
     .addEventListener("click", () => {
