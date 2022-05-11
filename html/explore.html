@@ -46,6 +46,8 @@
           <div class="control-search-container mb-5">
             <h1 class="display-6 mb-2">Search:</h1>
             <div class="form-check form-check-inline mb-3">
+              <!-- ! input id and label for need to be the same  -->
+              <!-- ! when you will run this html file, try to click on the text and you will see that now the input gets checked -->
               <input
                 class="form-check-input"
                 type="radio"
@@ -54,7 +56,7 @@
                 name="radiogroup"
                 checked
               />
-              <label class="form-check-label" for="input-radio-arctic"
+              <label class="form-check-label" for="inputRadioArctic"
                 >Arctic</label
               >
             </div>
@@ -66,14 +68,18 @@
                 id="inputRadioAntarctica"
                 name="radiogroup"
               />
-              <label class="form-check-label" for="input-radio-arctic"
+              <label class="form-check-label" for="inputRadioAntarctica"
                 >Antarctica</label
               >
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text">Year:</span>
+              <!-- ! type number don't allow user to insert letters or other characters -->
+              <!-- ! if you use number type you can specify and max and a min values -->
               <input
-                type="text"
+                type="number"
+                max="2022"
+                min="1900"
                 class="form-control"
                 placeholder="e.g. 1953"
                 value="2022"
@@ -115,6 +121,7 @@
               <div class="input-group mb-3">
                 <span class="input-group-text">Section:</span>
                 <div class="control-dropdown-container"></div>
+                <!-- ! be careful with naming, the 2 select have the same name and it was a bit confusing -->
                 <select
                   class="form-select"
                   name="region"
@@ -124,6 +131,7 @@
               <div class="input-group mb-3">
                 <span class="input-group-text">Byline</span>
                 <div class="control-dropdown-container"></div>
+                <!-- ! add an all option for the authors -->
                 <select
                   class="form-select"
                   name="region"
