@@ -21,6 +21,24 @@ const anyOtherFunction = (myData) => {
 
 getData(url);
 
+
+
+// * Fetch with return statement
+
+const myResult = async () => {
+  const response = await fetch(url);
+  const json = await response.json();
+  return json
+}
+
+//myResult();
+
+async function myReturn() {
+  let myJson = await myResult()
+  console.log("My json: ", myJson)
+}
+
+myReturn();
 /* const grabMyData = async (url) => {
   let result = await getData(url);
   console.log("grabMyData: ", result.response.docs[0].headline.main)
